@@ -18,17 +18,19 @@ When IMUNES is used on top of FreeBSD 8 (or higher) it requires a kernel
 that is compiled with the VIMAGE option included. A sample kernel config file
 is as follows:
 
-    include GENERIC
-    nooptions FLOWTABLE
-    options VIMAGE
-    options VNET_DEBUG
-    options KDB
-    options DDB
+```
+include GENERIC
+nooptions FLOWTABLE
+options VIMAGE
+options VNET_DEBUG
+options KDB
+options DDB
 
-    options IPSEC
-    device  crypto
-    options IPSEC_DEBUG
-    #options IPSEC_NAT_T not needed for FreeBSD versions 11.2+
+options IPSEC
+device  crypto
+options IPSEC_DEBUG
+#options IPSEC_NAT_T not needed for FreeBSD versions 11.2+
+```
 
 To compile the VIMAGE enabled kernel you must have a copy of the
 FreeBSD kernel and create the config file with the above mentioned
@@ -67,16 +69,18 @@ minimum requirement.
 
 First we need to install the packages required for IMUNES:
 
-    tcl (version 8.6 or greater)
-    tk (version 8.6 or greater)
-    tcllib
-    wireshark (with GUI)
-    ImageMagick
-    Docker (version 1.6 or greater)
-    OpenvSwitch
-    nsenter (part of the util-linux package since version 2.23 and later)
-    xterm
-    make (used for installation)
+```
+tcl (version 8.6 or greater)
+tk (version 8.6 or greater)
+tcllib
+wireshark (with GUI)
+ImageMagick
+Docker (version 1.6 or greater)
+OpenvSwitch
+nsenter (part of the util-linux package since version 2.23 and later)
+xterm
+make (used for installation)
+```
 
 Note: on some distributions the netem module `sch_netem` required for link configuration is only available by installing additional kernel packages. Please check the availability of the module:
 
@@ -117,8 +121,10 @@ Note: on some distributions the netem module `sch_netem` required for link confi
     Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 
 #### Ubuntu 18.04 LTS (Mint 19, 19.1)
-    # apt install openvswitch-switch docker.io xterm wireshark \
+```bash
+sudo apt install openvswitch-switch docker.io xterm wireshark \
         make imagemagick tk tcllib util-linux
+```
 
 #### Ubuntu 15.04
     # apt-get install openvswitch-switch docker.io xterm wireshark \
@@ -188,28 +194,68 @@ particular Linux distribution.
 Checkout the last fresh IMUNES source through the public github
 repository:
 
-    # git clone https://github.com/imunes/imunes.git
+```bash
+git clone https://github.com/Sesar-Lab-Teaching/imunes.git --branch retilab --depth=1
+```
 
 Now we need to install IMUNES and populate the virtual file system
 with predefined and required data. To install imunes on the system
 execute (as root):
 
-    # cd imunes
-    # make install
+```bash
+cd imunes
+sudo make install
+```
 
 ### Filesystem for virtual nodes
 
 For the topologies to work a template filesystem must be created.
 This is done by issuing the following command (as root):
 
-    # imunes -p
+```bash
+sudo imunes -p
+```
 
 Now the IMUNES GUI can be ran just by typing the imunes command
 in the terminal:
 
-    # imunes
+```bash
+sudo imunes
+```
 
-To execute experiments, run it as root.
+To execute experiments, run it as root. To run it in debug mode, append the `-d` option.
 
 For additional information visit our web site:
         http://imunes.net/
+
+---
+
+## Additional configurations for Ubuntu 24.04
+
+### Docker as non-root
+
+```bash
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo systemctl reboot
+```
+
+### Shortcut from main menu
+
+```bash
+sudo bash -c 'printf "[Desktop Entry]
+Name=Imunes
+Comment=Imunes (v2.3.0)
+Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY /usr/local/bin/imunes
+Icon=/usr/local/lib/imunes/icons/imunes_logo128.png
+Terminal=false
+Type=Application" > /usr/share/applications/imunes.desktop'
+```
+
+### Enable IP forwarding
+
+```bash
+sudo sed -i '/#net.ipv4.ip_forward=1/c\net.ipv4.ip_forward=1' /etc/sysctl.conf
+sudo sed -i '/#net.ipv6.conf.all.forwarding=1/c\net.ipv6.conf.all.forwarding=1' /etc/sysctl.conf
+sudo sysctl -p
+```

@@ -251,7 +251,7 @@ proc fetchRunningExperiments {} {
 #****
 proc allSnapshotsAvailable {} {
     global VROOT_MASTER execMode
-    catch {exec docker images} images
+    catch {exec docker images --format "{{.Repository}}"} images
 
     if {[lsearch $images "*$VROOT_MASTER"] != -1} {
         return 1

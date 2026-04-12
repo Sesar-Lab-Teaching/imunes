@@ -867,6 +867,14 @@ menu .menubar.events -tearoff  0
 .menubar.events add separator	
 .menubar.events add command -label "Event editor" -underline 0 \
 	-command "elementsEventsEditor"
+
+proc cleanupEnvironment {} {
+	global ttyrcmd
+	catch {
+        exec /usr/bin/xterm -hold -e /bin/bash -c "/usr/local/bin/cleanupAll && echo \"Cleanup completed successfully\" || echo \"Cleanup failed\"" &
+    }
+}
+
 #
 # Experiment
 #
@@ -879,7 +887,10 @@ menu .menubar.experiment -tearoff 0
 	-command "setOperMode edit; setOperMode exec" -state disabled
 .menubar.experiment add separator	
 .menubar.experiment add command -label "Attach to experiment" -underline 0 \
-	-command "attachToExperimentPopup" 
+	-command "attachToExperimentPopup"
+.menubar.experiment add separator	
+.menubar.experiment add command -label "Clean up environment" -underline 0 \
+	-command "cleanupEnvironment"
 
 #
 # Help

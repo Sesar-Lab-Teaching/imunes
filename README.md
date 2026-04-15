@@ -246,7 +246,7 @@ sudo systemctl reboot
 sudo bash -c 'printf "[Desktop Entry]
 Name=Imunes
 Comment=Imunes (v2.3.0)
-Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY /usr/local/bin/imunes
+Exec=sh -c 'xhost +local: && pkexec env DISPLAY=$DISPLAY /usr/local/bin/imunes'
 Icon=/usr/local/lib/imunes/icons/imunes_logo128.png
 Terminal=false
 Type=Application" > /usr/share/applications/imunes.desktop'

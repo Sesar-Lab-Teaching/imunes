@@ -243,13 +243,13 @@ sudo systemctl reboot
 ### Shortcut from main menu
 
 ```bash
-sudo bash -c 'printf "[Desktop Entry]
+sudo bash -c "printf \"[Desktop Entry]
 Name=Imunes
 Comment=Imunes (v2.3.0)
 Exec=sh -c 'xhost +local: && pkexec env DISPLAY=$DISPLAY /usr/local/bin/imunes'
 Icon=/usr/local/lib/imunes/icons/imunes_logo128.png
 Terminal=false
-Type=Application" > /usr/share/applications/imunes.desktop'
+Type=Application\" > /usr/share/applications/imunes.desktop"
 ```
 
 ### Enable IP forwarding
@@ -258,4 +258,11 @@ Type=Application" > /usr/share/applications/imunes.desktop'
 sudo sed -i '/#net.ipv4.ip_forward=1/c\net.ipv4.ip_forward=1' /etc/sysctl.conf
 sudo sed -i '/#net.ipv6.conf.all.forwarding=1/c\net.ipv6.conf.all.forwarding=1' /etc/sysctl.conf
 sudo sysctl -p
+```
+
+### Wireshark for non-root
+
+```bash
+sudo adduser labreti wireshark
+# logout and login
 ```

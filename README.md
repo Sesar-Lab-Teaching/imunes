@@ -266,3 +266,11 @@ sudo sysctl -p
 sudo adduser labreti wireshark
 # logout and login
 ```
+
+### Add utility functions
+
+```bash
+# Ubuntu 24.04 add ~/bin folder to path by default (see ~/.profile file)
+mkdir ~/bin
+cp vm-files/exercises_utils.sh ~/bin/exercises_utils.sh
+```

@@ -15,7 +15,7 @@ function run_cmd {
     local msg="$2"
     
     __print_frame
-    printf "\e[1mNext Command: $cmd\n(Press <enter> to execute)\e[0m\n"
+    printf "Next Command:\n\e[1m$cmd\e[0m\n(Press <enter> to execute)\n"
     read -s
 
     $cmd
@@ -33,7 +33,7 @@ function run_cmd_on_new_shell {
     local resultvar="$3"
 
     __print_frame
-    printf "\e[1mNext Command (new shell): $cmd\n(Press <enter> to execute)\e[0m\n"
+    printf "Next Command (new shell):\n\e[1m$cmd\e[0m\n(Press <enter> to execute)\n"
     read -s
 
     local pipe_for_pid=$(mktemp -u)

@@ -271,6 +271,9 @@ sudo adduser labreti wireshark
 
 ```bash
 # Ubuntu 24.04 add ~/bin folder to path by default (see ~/.profile file)
-mkdir ~/bin
+mkdir -p ~/bin
 cp vm-files/exercises_utils.sh ~/bin/exercises_utils.sh
+chmod +x ~/bin/exercises_utils.sh
+printf "\nsource ~/bin/exercises_utils.sh\n" >> ~/.bashrc
+# logout and login
 ```

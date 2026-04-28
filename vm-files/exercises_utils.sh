@@ -18,7 +18,7 @@ function run_cmd {
     printf "Next Command:\n\e[1m$cmd\e[0m\n(Press <enter> to execute)\n"
     read -s
 
-    $cmd
+    eval "$cmd"
 
     printf "\n\n"
     if [[ -n "$msg" ]]

@@ -232,6 +232,14 @@ For additional information visit our web site:
 
 ## Additional configurations for Ubuntu 24.04
 
+### Necessary packages
+
+```bash
+# to run gnome-terminal inside imunes
+sudo apt install dbus-x11
+sudo apt install curl
+```
+
 ### Docker as non-root
 
 ```bash

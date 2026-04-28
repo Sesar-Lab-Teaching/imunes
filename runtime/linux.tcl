@@ -218,9 +218,10 @@ proc spawnShell { node cmd } {
     set node_id $eid\.$node
 
     # FIXME make this modular
-    nexec xterm -sb -rightbar \
-    -T "IMUNES: [getNodeName $node] (console) [string trim [lindex [split $cmd /] end] ']" \
-    -e "docker exec -it $node_id $cmd" 2> /dev/null &
+    nexec gnome-terminal \
+        --zoom 0.8 \
+        --title "IMUNES: [getNodeName $node] (console) [string trim [lindex [split $cmd /] end] ']" \
+        -- docker exec -it "$node_id" "$cmd"
 }
 
 #****f* linux.tcl/fetchRunningExperiments

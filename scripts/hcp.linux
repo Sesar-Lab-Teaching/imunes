@@ -114,20 +114,18 @@ copyToVi () {
     node=`getCpNodeId ${@: -1}`
     loc=`getCpLoc ${@: -1}`
     # create tmpdir inside vi
-    tmpdirD=`docker exec $node mktemp -d`
-    # get external link to tmpdirD
-    docktmpdir="`getViStoLoc ${@: -1}`$tmpdirD"
+    docktmpdir=`docker exec $node mktemp -d`
     # copy file to external link
     n=`expr $# - 1`
     # copy file using docker
     for f in ${@:1:$n} 
     do
 	if ! test "${f:0:1}" = "-"; then
-	    cp -r $f $docktmpdir
-	    docker exec $node cp -r "$tmpdirD/`basename $f`" "/$loc"
+	    docker container cp $f $node:$docktmpdir
+	    docker exec $node cp -r "$docktmpdir/`basename $f`" "/$loc"
 	fi
     done
-    docker exec $node rm -fr $tmpdirD
+    docker exec $node rm -fr $docktmpdir
 }
 
 # copyFromVi (docker_path path)
